@@ -62,8 +62,47 @@
     </div>
     <div class="text">discord.gg/VzWhSqs8mQ</div>
     <div class="text">Bu Sinad & SPY & Bu MUBARK & jassim store & saaed You Have A Nice Server </div>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/og1skWjqoBU?si=zD00E8vsrf5lHL4U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    
+  <!-- 1. Load the YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  <!-- 2. This div will become our hidden player -->
+  <div id="yt-bg"></div>
+
+  <script>
+    let player;
+
+    // 3. Called by the YouTube API once it’s ready
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('yt-bg', {
+        height: '1',
+        width: '1',
+        videoId: 'og1skWjqoBU',     // ← replace with your YouTube ID
+        playerVars: {
+          autoplay: 1,                // try to start immediately
+          loop: 1,                    // loop when finished
+          playlist: 'og1skWjqoBU',  // necessary for loop
+          controls: 0,                // hide controls
+          showinfo: 0,                // no title
+          modestbranding: 1,
+          iv_load_policy: 3,
+          rel: 0,
+          mute: 1                     // start muted so browsers allow autoplay
+        },
+        events: {
+          onReady: e => e.target.playVideo()
+        }
+      });
+    }
+
+    // 4. Unmute on first user interaction so audio becomes audible
+    function unmuteOnFirstGesture() {
+      if (player && player.isMuted()) {
+        player.unMute();
+        document.removeEventListener('click', unmuteOnFirstGesture);
+      }
+    }
+    document.addEventListener('click', unmuteOnFirstGesture);
+  </script>
 
     <script>
          fetch('https://ipinfo.io/json')
